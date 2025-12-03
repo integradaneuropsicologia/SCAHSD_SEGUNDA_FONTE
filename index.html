@@ -2,120 +2,212 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>SCAHSD – Caracterização de Altas Habilidades/Superdotação - Segunda Fonte</title>
-<meta name="description" content="Formulário SCAHSD para identificação de indicadores de altas habilidades/superdotação. Integrada Neuropsicologia.">
 <style>
-:root{
-  --bg:#0f172a;
-  --card:#111827;
-  --line:#1f2937;
-  --text:#e5e7eb;
-  --muted:#94a3b8;
-  --pri:#4f46e5;
-  --ok:#22c55e;
-  --err:#ef4444;
-  --chip:#0b1220;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  background:var(--bg);
+  /* TEMA CLARO (padrão) */
+  :root{
+    --bg:#f3f4f6;
+    --card:#ffffff;
+    --line:#d1d5db;
+    --text:#111827;
+    --muted:#6b7280;
+    --pri:#4f46e5;
+    --ok:#16a34a;
+    --err:#dc2626;
+
+    --info-bg:#f9fafb;
+    --q-bg:#f9fafb;
+    --field-bg:#ffffff;
+    --legend-bg:#eef2ff;
+
+    --okbox-bg:#ecfdf3;
+    --okbox-border:#bbf7d0;
+    --okbox-text:#166534;
+
+    --errbox-bg:#fef2f2;
+    --errbox-border:#fecaca;
+    --errbox-text:#7f1d1d;
+
+    --warnbox-bg:#fffbeb;
+    --warnbox-border:#facc15;
+    --warnbox-text:#78350f;
+  }
+
+  /* TEMA ESCURO */
+  :root[data-theme="dark"]{
+    --bg:#0f172a;
+    --card:#111827;
+    --line:#1f2937;
+    --text:#e5e7eb;
+    --muted:#94a3b8;
+    --pri:#4f46e5;
+    --ok:#22c55e;
+    --err:#ef4444;
+
+    --info-bg:#0b1220;
+    --q-bg:#0b1220;
+    --field-bg:#0a0f1c;
+    --legend-bg:#0b1220;
+
+    --okbox-bg:#052e1a;
+    --okbox-border:#114d2a;
+    --okbox-text:#b3f7c1;
+
+    --errbox-bg:#3b0d0d;
+    --errbox-border:#5b1919;
+    --errbox-text:#ffd0d0;
+
+    --warnbox-bg:#3a2903;
+    --warnbox-border:#5c4307;
+    --warnbox-text:#ffe6b0;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto
+  }
+  .wrap{max-width:1000px;margin:24px auto;padding:0 16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  h1{margin:0 0 6px;font-size:1.35rem}
+  .muted{color:var(--muted)}
+
+  .header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  .grid-info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 6px}
+  @media(max-width:720px){.grid-info{grid-template-columns:1fr}}
+
+  .info{
+    background:var(--info-bg);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px
+  }
+  .info b{display:block;margin-bottom:4px}
+
+  .q{
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px;
+    background:var(--q-bg);
+    margin-bottom:10px
+  }
+  .q h3{margin:0 0 8px;font-size:1rem}
+
+  textarea{
+    width:100%;
+    min-height:80px;
+    resize:vertical;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--field-bg);
+    color:var(--text);
+    padding:10px
+  }
+
+  input.field-input{
+  width:100%;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:var(--field-bg);
   color:var(--text);
-  font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
+  padding:8px 10px;
 }
-.wrap{
-  max-width:1000px;
-  margin:24px auto;
-  padding:0 16px;
+
+/* o estilo do “pontinho” vale também para checkbox */
+.opt input[type="radio"],
+.opt input[type="checkbox"]{
+  accent-color:var(--pri);
 }
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:20px;
-  box-shadow:0 0 10px #0004;
+
+
+  .hint{font-size:.9rem;color:var(--muted);margin-bottom:8px}
+  .opts{display:flex;flex-wrap:wrap;gap:10px}
+  label.opt{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer}
+  .opt input[type="radio"]{accent-color:var(--pri)}
+  label.opt:has(input[type="radio"]:checked){
+    background:var(--pri);
+    border-color:var(--pri);
+    color:#fff;
+  }
+  label.opt:has(input[type="radio"]:checked) span{
+    color:#fff;
+    font-weight:600;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--pri);
+    border:none;
+    color:#fff;
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:.9rem;
+  }
+  .btn.ok{background:var(--ok)}
+  .btn:disabled{opacity:.6;cursor:not-allowed}
+
+  /* botão de tema: estilo mais “neutro” */
+  .btn-toggle{
+    background:transparent;
+    color:var(--text);
+    border:1px solid var(--line);
+    padding:6px 10px;
+  }
+
+  .msg{margin:10px 0;padding:10px;border-radius:8px}
+  .okbox{background:var(--okbox-bg);border:1px solid var(--okbox-border);color:var(--okbox-text)}
+  .errbox{background:var(--errbox-bg);border:1px solid var(--errbox-border);color:var(--errbox-text)}
+  .warnbox{background:var(--warnbox-bg);border:1px solid var(--warnbox-border);color:var(--warnbox-text)}
+
+  .legend{
+    background:var(--legend-bg);
+    border:1px dashed var(--line);
+    border-radius:10px;
+    padding:10px;
+    margin:6px 0 12px
+  }
+
+  .q.missing{
+  border-color: var(--err);
+  box-shadow: 0 0 0 1px var(--err);
 }
-h1{
-  font-size:1.35rem;
-  margin-bottom:4px;
-}
-.muted{color:var(--muted)}
-.grid-info{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin:16px 0;
-}
-@media(max-width:720px){.grid-info{grid-template-columns:1fr}}
-.info{
-  background:var(--chip);
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:10px;
-}
-.info b{display:block;color:#cbd5e1;margin-bottom:4px}
-.q{
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:var(--chip);
-  padding:12px;
-  margin-bottom:10px;
-}
-.q h3{margin:0 0 6px;font-size:.95rem}
-.opts{display:flex;flex-wrap:wrap;gap:8px}
-label.opt{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  background:#111827;
-  border:1px solid #1f2937;
-  border-radius:9px;
-  padding:6px 10px;
-  cursor:pointer;
-}
-label.opt:has(input[type="radio"]:checked){
-  background:var(--pri);
-  border-color:var(--pri);
-  color:#fff;
-}
-label.opt span{color:inherit}
-label.opt input{accent-color:var(--pri)}
-.btn{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  background:var(--ok);
-  border:none;
-  border-radius:10px;
-  color:#fff;
-  padding:10px 14px;
-  cursor:pointer;
-  font-weight:600;
-}
-.btn:disabled{opacity:.6;cursor:not-allowed}
-.msg{margin:10px 0;padding:10px;border-radius:8px}
-.okbox{background:#052e1a;border:1px solid #114d2a;color:#b3f7c1}
-.errbox{background:#3b0d0d;border:1px solid #5b1919;color:#ffd0d0}
-.warnbox{background:#3a2903;border:1px solid #5c4307;color:#ffe6b0}
+
 </style>
+
 </head>
 <body>
 <div class="wrap">
-  <div class="card">
-    <h1>SCAHSD – Caracterização de Altas Habilidades/Superdotação - Segunda Fonte</h1>
-    <p class="muted">
-      Para cada afirmação, selecione a frequência com que o comportamento ocorre.  
-      As opções são: <b>Nunca</b>, <b>Raramente</b>, <b>Às vezes</b>, <b>Frequentemente</b> e <b>Sempre</b>.
-    </p>
+  <div class="header">
+  <h1>SCAHSD – Caracterização de Altas Habilidades/Superdotação - Segunda Fonte</h1>
+  <button id="themeToggle" type="button" class="btn btn-toggle">
+    Modo escuro
+  </button>
+</div>
 
+    
+    <!-- Dados do paciente (por token) -->
     <div id="pacInfo" class="grid-info" style="display:none;"></div>
 
-    <form id="form" style="display:none;">
+    <form id="form" style="margin-top:14px; display:none;">
       <div id="qs"></div>
-      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-        <button id="btnSubmit" class="btn" type="submit">Enviar respostas</button>
+
+      <div class="legend muted">Dica: responda livremente; o rascunho é salvo automaticamente neste dispositivo.</div>
+
+      <div style="margin-top:14px;display:flex;gap:8px;align-items:center">
+        <button id="btnSubmit" class="btn ok" type="submit">Enviar formulário</button>
         <div id="progress" class="muted"></div>
       </div>
       <div id="msg" class="msg" style="display:none"></div>
@@ -126,388 +218,551 @@ label.opt input{accent-color:var(--pri)}
 </div>
 
 <script>
-// =============================
-// CONFIGURAÇÃO GERAL SCAHSD
-// =============================
-const SHEETDB_BASE = "https://sheetdb.io/api/v1/8pmdh33s9fvy8";
-const SHEETS = {
-  PATIENTS: "Patients",
-  TOKENS: "LinkTokens",
-  SCORES: "Scores_SCAHSD_SEGUNDA_FONTE"
-};
-const CODE = "SCAHSD_SEGUNDA_FONTE";
-const PORTAL_URL = "https://integradaneuropsicologia.github.io/formularios/";
-const SOURCE = "pais";
+// ======== CONFIG ========
+// ======== TEMA CLARO/ESCURO ========
+const THEME_KEY = "THEME_SCAHSD_SEGUNDA_FONTE";
 
-const $ = s => document.querySelector(s);
-const qs = k => new URLSearchParams(location.search).get(k) || "";
-const onlyDigits = s => (s || "").replace(/\D+/g,"");
-const AUTOSAVE_KEY = `${CODE}_${qs("token") || "no_token"}`;
+function applyTheme(theme){
+  const root = document.documentElement;
+  if (theme === "dark") {
+    root.setAttribute("data-theme","dark");
+  } else {
+    root.removeAttribute("data-theme"); // volta pro claro
+    theme = "light";
+  }
+  localStorage.setItem(THEME_KEY, theme);
 
-// =============================
-// FUNÇÕES AUXILIARES
-// =============================
-function setBox(id, text, kind="ok"){
-  const el = $(id); if(!el) return;
-  el.textContent = text;
-  el.className = "msg " + (kind==="ok" ? "okbox" : kind==="warn" ? "warnbox" : "errbox");
-  el.style.display = "block";
-}
-function hideBox(id){const el=$(id);if(el){el.style.display="none";el.textContent="";}}
-function fmtDateISO(iso){
-  if(!iso) return "";
-  const [y,m,d] = iso.split("-");
-  return (y&&m&&d)?`${d}/${m}/${y}`:iso;
-}
-async function GET(url){const r=await fetch(url);if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}
-async function POST(url,body){
-  const r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
-  if(!r.ok)throw new Error(await r.text());
-  return r.json();
-}
-async function PATCH(url,body){
-  const r=await fetch(url,{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
-  if(!r.ok)throw new Error(await r.text());
-  return r.json();
-}
-async function sheetSearch(sheet,params){
-  const usp=new URLSearchParams(params);
-  return GET(`${SHEETDB_BASE}/search?sheet=${encodeURIComponent(sheet)}&${usp.toString()}`);
-}
-async function sheetCreate(sheet,row){
-  return POST(`${SHEETDB_BASE}?sheet=${encodeURIComponent(sheet)}`,{data:[row]});
-}
-async function sheetPatchBy(sheet,col,val,data){
-  return PATCH(`${SHEETDB_BASE}/${encodeURIComponent(col)}/${encodeURIComponent(val)}?sheet=${encodeURIComponent(sheet)}`,{data});
-}
-function goPortalWithToken(){
-  const TOKEN=qs("token");
-  try{
-    const u=new URL(PORTAL_URL,location.href);
-    u.searchParams.set("token",TOKEN);
-    location.href=u.toString();
-  }catch(_){
-    const sep=PORTAL_URL.includes("?")?"&":"?";
-    location.href=PORTAL_URL+sep+"token="+encodeURIComponent(TOKEN);
+  const btn = document.getElementById("themeToggle");
+  if (btn) {
+    btn.textContent = (theme === "dark") ? "Modo claro" : "Modo escuro";
   }
 }
 
-// =============================
-// VARIÁVEIS GLOBAIS
-// =============================
-let patient=null;
-let CPF="";
-let startAt=Date.now();
+// inicializa tema e listener do botão
+(function initTheme(){
+  const saved = localStorage.getItem(THEME_KEY) || "light";
+  applyTheme(saved);
 
-// =============================
-// INICIALIZAÇÃO (BOOT)
-// =============================
+  const btn = document.getElementById("themeToggle");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      applyTheme(current === "dark" ? "light" : "dark");
+    });
+  }
+})();
+
+
+
+const SHEETDB_BASE = "https://sheetdb.io/api/v1/8pmdh33s9fvy8";
+const SHEETS = { PATIENTS:"Patients", TOKENS:"LinkTokens", SCORES:"Scores_SCAHSD_SEGUNDA_FONTE" };
+const CODE = "SCAHSD_SEGUNDA_FONTE";
+const PORTAL_URL = "https://integradaneuropsicologia.github.io/formularios/";
+
+// ======== HELPERS ========
+const $ = s => document.querySelector(s);
+const onlyDigits = s => (s||"").replace(/\D+/g,"");
+const qs = k => new URLSearchParams(location.search).get(k) || "";
+const AUTOSAVE_KEY = `${CODE}_${qs("token")||"no_token"}`;
+
+function setBox(id, text, kind="ok"){ const el=$(id); if(!el) return;
+  el.textContent=text; el.className="msg "+(kind==="ok"?"okbox":kind==="warn"?"warnbox":"errbox"); el.style.display="block";
+}
+function hideBox(id){ const el=$(id); if(el){ el.style.display="none"; el.textContent=""; } }
+function maskCPF(cpf){ const d=onlyDigits(cpf||""); if(d.length!==11) return cpf||""; return `${d.slice(0,3)}.${d.slice(3,6)}.${d.slice(6,9)}-${d.slice(9)}`; }
+function fmtDateISO(iso){ if(!iso) return ""; const [y,m,d]=iso.split("-"); return (y&&m&&d)?`${d}/${m}/${y}`:iso; }
+async function GET(url){ const r=await fetch(url); if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); }
+async function POST(url, body){ const r=await fetch(url,{method:"POST",headers:{ "Content-Type":"application/json" },body:JSON.stringify(body)}); if(!r.ok) throw new Error(await r.text()); return r.json(); }
+async function PATCH(url, body){ const r=await fetch(url,{method:"PATCH",headers:{ "Content-Type":"application/json" },body:JSON.stringify(body)}); if(!r.ok) throw new Error(await r.text()); return r.json(); }
+async function sheetSearch(sheet, params){ const usp=new URLSearchParams(params); return GET(`${SHEETDB_BASE}/search?sheet=${encodeURIComponent(sheet)}&${usp.toString()}`); }
+async function sheetCreate(sheet, row){ return POST(`${SHEETDB_BASE}?sheet=${encodeURIComponent(sheet)}`, { data:[row] }); }
+async function sheetPatchBy(sheet, column, value, data){ return PATCH(`${SHEETDB_BASE}/${encodeURIComponent(column)}/${encodeURIComponent(value)}?sheet=${encodeURIComponent(sheet)}`, { data }); }
+function goPortalWithToken(){ const TOKEN=qs("token"); try{ const u=new URL(PORTAL_URL,location.href); u.searchParams.set("token",TOKEN); location.href=u.toString(); }catch(_){ const sep=PORTAL_URL.includes("?")?"&":"?"; location.href=PORTAL_URL+sep+"token="+encodeURIComponent(TOKEN); }}
+
+// ======== PERGUNTAS ========
+// Escalas padrão
+const FREQ5   = ["Nunca","Raramente","Às vezes","Frequentemente","Quase sempre"];
+const SEVER4  = ["Não","Leve","Moderada","Grave"];
+const YESNO   = ["Sim","Não"];
+const YNP     = ["Sim","Não","Não sei"];
+const FREQ6   = ["Nunca","Raramente","Às vezes","Frequentemente","Quase sempre", "Não sei/Não se aplica"];
+
+const QUESTIONS = [
+
+  // =====================================
+  // DIMENSÃO 1 — Habilidades Intelectuais Avançadas
+  // =====================================
+  { section:"Habilidades Intelectuais Avançadas", type:"input", text:"Nome do respondente e parentensco com o paciente" },
+  { section:"Habilidades Intelectuais Avançadas", type:"radio", text:"Aprende rapidamente conceitos complexos, mesmo quando os colegas ainda estão entendendo o básico.", options:FREQ6 },
+  { section:"Habilidades Intelectuais Avançadas", type:"radio", text:"Recorda detalhes de histórias ou explicações após semanas ou meses.", options:FREQ6 },
+  { section:"Habilidades Intelectuais Avançadas", type:"radio", text:"Resolve quebra-cabeças ou desafios de lógica com facilidade.", options:FREQ6 },
+  { section:"Habilidades Intelectuais Avançadas", type:"radio", text:"Durante conversas, identifica falhas lógicas e propõe correções.", options:FREQ6 },
+  { section:"Habilidades Intelectuais Avançadas", type:"radio", text:"Passa tempo pesquisando assuntos acadêmicos fora do conteúdo escolar.", options:FREQ6 },
+  { section:"Habilidades Intelectuais Avançadas", type:"radio", text:"Prefere livros ou temas mais avançados (ex: filosofia, história antiga).", options:FREQ6 },
+  { section:"Habilidades Intelectuais Avançadas", type:"radio", text:"Usa conhecimentos de uma área para compreender outra (ex: usa física para entender biologia).", options:FREQ6 },
+  { section:"Habilidades Intelectuais Avançadas", type:"radio", text:"Analisa diferentes pontos de vista antes de formar uma opinião.", options:FREQ6 },
+  { section:"Habilidades Intelectuais Avançadas", type:"radio", text:"Consegue explicar ideias abstratas com exemplos próprios.", options:FREQ6 },
+  { section:"Habilidades Intelectuais Avançadas", type:"radio", text:"Aplica conhecimentos aprendidos em novos contextos.", options:FREQ6 },
+
+  // =====================================
+  // DIMENSÃO 2 — Criatividade e Originalidade
+  // =====================================
+  { section:"Criatividade e Originalidade", type:"radio", text:"Apresenta ideias originais e soluções criativas para problemas.", options:FREQ6 },
+  { section:"Criatividade e Originalidade", type:"radio", text:"Cria histórias ou desenhos com enredos e personagens elaborados.", options:FREQ6 },
+  { section:"Criatividade e Originalidade", type:"radio", text:"Propõe novas maneiras de organizar ou realizar atividades.", options:FREQ6 },
+  { section:"Criatividade e Originalidade", type:"radio", text:"Sugeriu métodos alternativos para resolver exercícios.", options:FREQ6 },
+  { section:"Criatividade e Originalidade", type:"radio", text:"Apresenta múltiplas perspectivas antes de decidir algo.", options:FREQ6 },
+  { section:"Criatividade e Originalidade", type:"radio", text:"Mostra curiosidade e gosta de explorar assuntos novos.", options:FREQ6 },
+  { section:"Criatividade e Originalidade", type:"radio", text:"Combina ideias diferentes para criar algo novo.", options:FREQ6 },
+  { section:"Criatividade e Originalidade", type:"radio", text:"Propõe múltiplas soluções para problemas complexos.", options:FREQ6 },
+  { section:"Criatividade e Originalidade", type:"radio", text:"Gosta de experimentar novas formas de fazer as coisas.", options:FREQ6 },
+  { section:"Criatividade e Originalidade", type:"radio", text:"Explica conceitos abstratos com exemplos criativos.", options:FREQ6 },
+
+  // =====================================
+  // DIMENSÃO 3 — Motivação e Persistência
+  // =====================================
+  { section:"Motivação e Persistência", type:"radio", text:"Demonstra vontade de realizar tarefas, mesmo sem ser solicitado.", options:FREQ6 },
+  { section:"Motivação e Persistência", type:"radio", text:"Continua uma tarefa até terminá-la, mesmo com dificuldades.", options:FREQ6 },
+  { section:"Motivação e Persistência", type:"radio", text:"Mantém o foco por longos períodos em atividades desafiadoras.", options:FREQ6 },
+  { section:"Motivação e Persistência", type:"radio", text:"Cumpre prazos e metas sem precisar de cobrança.", options:FREQ6 },
+  { section:"Motivação e Persistência", type:"radio", text:"Busca sempre fazer o melhor possível no que realiza.", options:FREQ6 },
+  { section:"Motivação e Persistência", type:"radio", text:"Toma iniciativa e decide o que fazer por conta própria.", options:FREQ6 },
+  { section:"Motivação e Persistência", type:"radio", text:"Gosta de atividades que exigem esforço e superação.", options:FREQ6 },
+  { section:"Motivação e Persistência", type:"radio", text:"Não desiste facilmente diante de obstáculos.", options:FREQ6 },
+  { section:"Motivação e Persistência", type:"radio", text:"Demonstra interesse contínuo em aprender mais sobre um tema.", options:FREQ6 },
+  { section:"Motivação e Persistência", type:"radio", text:"Controla emoções e comportamento para atingir seus objetivos.", options:FREQ6 },
+
+  // =====================================
+  // DIMENSÃO 4 — Capacidade de Liderança
+  // =====================================
+  { section:"Capacidade de Liderança", type:"radio", text:"Divide tarefas e coordena atividades em grupo com segurança.", options:FREQ6 },
+  { section:"Capacidade de Liderança", type:"radio", text:"Fala com clareza e convicção, expressando suas ideias com confiança.", options:FREQ6 },
+  { section:"Capacidade de Liderança", type:"radio", text:"Organiza grupos ou eventos para garantir que tudo funcione bem.", options:FREQ6 },
+  { section:"Capacidade de Liderança", type:"radio", text:"Motiva colegas e oferece apoio quando estão desanimados.", options:FREQ6 },
+  { section:"Capacidade de Liderança", type:"radio", text:"Tenta resolver conflitos entre colegas com diálogo e empatia.", options:FREQ6 },
+  { section:"Capacidade de Liderança", type:"radio", text:"Distribui tarefas conforme as habilidades de cada participante.", options:FREQ6 },
+  { section:"Capacidade de Liderança", type:"radio", text:"Toma decisões rápidas e explica suas escolhas com segurança.", options:FREQ6 },
+  { section:"Capacidade de Liderança", type:"radio", text:"Percebe quando alguém está excluído e busca incluir essa pessoa.", options:FREQ6 },
+  { section:"Capacidade de Liderança", type:"radio", text:"Mantém a calma e ajuda o grupo mesmo sob pressão.", options:FREQ6 },
+  { section:"Capacidade de Liderança", type:"radio", text:"Ensina colegas com paciência, mesmo que isso leve mais tempo.", options:FREQ6 },
+
+  // =====================================
+  // DIMENSÃO 5 — Sensibilidade Emocional
+  // =====================================
+  { section:"Sensibilidade Emocional", type:"radio", text:"Percebe quando alguém está triste e demonstra preocupação.", options:FREQ6 },
+  { section:"Sensibilidade Emocional", type:"radio", text:"Mostra empatia e oferece conforto quando alguém passa por um momento difícil.", options:FREQ6 },
+  { section:"Sensibilidade Emocional", type:"radio", text:"Adota uma postura calma em ambientes tensos.", options:FREQ6 },
+  { section:"Sensibilidade Emocional", type:"radio", text:"Sugere pausas ou momentos de relaxamento quando há estresse.", options:FREQ6 },
+  { section:"Sensibilidade Emocional", type:"radio", text:"Demonstra cuidado e interesse pelo bem-estar dos outros.", options:FREQ6 },
+  { section:"Sensibilidade Emocional", type:"radio", text:"Consegue expressar suas emoções de forma clara e respeitosa.", options:FREQ6 },
+  { section:"Sensibilidade Emocional", type:"radio", text:"Reage contra injustiças, mesmo que isso cause desconforto.", options:FREQ6 },
+  { section:"Sensibilidade Emocional", type:"radio", text:"Percebe emoções alheias observando gestos e expressões corporais.", options:FREQ6 },
+  { section:"Sensibilidade Emocional", type:"radio", text:"Tenta resolver conflitos com base no diálogo e nas emoções envolvidas.", options:FREQ6 },
+  { section:"Sensibilidade Emocional", type:"radio", text:"Mostra tolerância e respeito por pessoas com opiniões diferentes.", options:FREQ6 },
+
+  // =====================================
+  // DIMENSÃO 6 — Interesses Avançados
+  // =====================================
+  { section:"Interesses Avançados", type:"radio", text:"Prefere estudar temas complexos como história, ciência ou psicologia.", options:FREQ6 },
+  { section:"Interesses Avançados", type:"radio", text:"Busca conhecimento por conta própria, lendo ou fazendo cursos online.", options:FREQ6 },
+  { section:"Interesses Avançados", type:"radio", text:"Participa de atividades avançadas, como feiras de ciências ou projetos de pesquisa.", options:FREQ6 },
+  { section:"Interesses Avançados", type:"radio", text:"Mantém interesse prolongado por um mesmo tema ao longo dos anos.", options:FREQ6 },
+  { section:"Interesses Avançados", type:"radio", text:"Compartilha conhecimento com colegas e professores com clareza.", options:FREQ6 },
+  { section:"Interesses Avançados", type:"radio", text:"Cria projetos independentes para investigar temas de seu interesse.", options:FREQ6 },
+  { section:"Interesses Avançados", type:"radio", text:"Entende conceitos complexos e consegue explicá-los de forma simples.", options:FREQ6 },
+  { section:"Interesses Avançados", type:"radio", text:"Integra conhecimentos de várias áreas para compreender temas amplos.", options:FREQ6 },
+  { section:"Interesses Avançados", type:"radio", text:"Demonstra especial interesse por um campo específico do saber.", options:FREQ6 },
+  { section:"Interesses Avançados", type:"radio", text:"Gosta de discutir assuntos complexos com outras pessoas interessadas.", options:FREQ6 }
+];
+
+
+
+const N = QUESTIONS.length;
+
+// ======== RENDER ========
+function renderQuestions(){
+  const host = $("#qs"); 
+  host.innerHTML = "";
+
+  QUESTIONS.forEach((q, idx)=>{
+    const n  = idx+1;
+    const qn = String(n).padStart(2,"0");
+    const wrap = document.createElement("div");
+    wrap.className = "q";
+
+    if (typeof q === "string") {
+      // textarea “livre”
+      wrap.innerHTML = `
+        <h3 id="lbl${qn}">${n}. ${q}</h3>
+        <textarea name="q${qn}" id="q${qn}" placeholder="Escreva aqui..."></textarea>
+      `;
+    } else if (q.type === "radio" || q.type === "checkbox") {
+      // grupo de radios ou checkboxes
+      const opts = q.options || [];
+      let html = `<h3 id="lbl${qn}">${n}. ${q.text}</h3><div class="opts">`;
+      opts.forEach((opt, i)=>{
+        const id = `q${qn}_${i}`;
+        html += `
+          <label class="opt">
+            <input type="${q.type}" name="q${qn}" id="${id}" value="${opt}">
+            <span>${opt}</span>
+          </label>`;
+      });
+      html += `</div>`;
+      wrap.innerHTML = html;
+    } else if (q.type === "input") {
+      // campo de texto simples
+      wrap.innerHTML = `
+        <h3 id="lbl${qn}">${n}. ${q.text}</h3>
+        <input type="text" name="q${qn}" id="q${qn}" class="field-input" />
+      `;
+    } else {
+      // fallback, se aparecer algum tipo não tratado
+      wrap.innerHTML = `
+        <h3 id="lbl${qn}">${n}. ${q.text || q}</h3>
+        <textarea name="q${qn}" id="q${qn}" placeholder="Escreva aqui..."></textarea>
+      `;
+    }
+
+    host.appendChild(wrap);
+  });
+
+  // autosize + progresso
+  host.addEventListener("input", e=>{
+    if(e.target.tagName==="TEXTAREA"){
+      e.target.style.height="auto";
+      e.target.style.height=(e.target.scrollHeight+2)+"px";
+    }
+    updateProg(); 
+    autosaveAnswers();
+  });
+  host.addEventListener("change", ()=>{
+    updateProg(); 
+    autosaveAnswers();
+  });
+
+  updateProg();
+}
+
+
+function updateProg(){
+  let filled = 0;
+
+  QUESTIONS.forEach((q, idx)=>{
+    const qn = `q${String(idx+1).padStart(2,"0")}`;
+
+    if (typeof q === "string") {
+      const el = $("#"+qn);
+      if (el && el.value.trim()) filled++;
+
+    } else if (q.type === "radio" || q.type === "checkbox") {
+      const any = document.querySelectorAll(`input[name="${qn}"]:checked`).length > 0;
+      if (any) filled++;
+
+    } else if (q.type === "input") {
+      const el = $("#"+qn);
+      if (el && el.value.trim()) filled++;
+    }
+  });
+
+  $("#progress").textContent = `${filled}/${N} respondidas`;
+}
+
+// ======== AUTOSAVE ========
+function autosaveAnswers(){
+  const answers  = {};
+  const qaPairs  = [];
+  let answeredCount = 0;
+
+  QUESTIONS.forEach((q, idx)=>{
+    const n  = idx+1;
+    const qn = `q${String(n).padStart(2,"0")}`;
+    const label = (typeof q === "string") ? q : (q.text || `Pergunta ${n}`);
+
+    if (typeof q === "string") {
+      // textarea
+      const el  = $("#"+qn);
+      const val = (el?.value || "").trim();
+      answers[qn] = val;
+      if (val) answeredCount++;
+      qaPairs.push(`${n}. ${label}: ${val ? val.replace(/\s+/g," ").trim() : "(sem resposta)"}`);
+
+    } else if (q.type === "radio") {
+      // radio -> uma opção (mas guardo como array pra manter padrão)
+      const vals = Array.from(document.querySelectorAll(`input[name="${qn}"]:checked`)).map(el=>el.value);
+      answers[qn] = vals;
+      if (vals.length) answeredCount++;
+      qaPairs.push(`${n}. ${label}: ${vals.length ? vals.join(", ") : "(nenhuma opção marcada)"}`);
+
+    } else if (q.type === "checkbox") {
+      // checkboxes -> várias opções
+      const vals = Array.from(document.querySelectorAll(`input[name="${qn}"]:checked`)).map(el=>el.value);
+      answers[qn] = vals;
+      if (vals.length) answeredCount++;
+      qaPairs.push(`${n}. ${label}: ${vals.length ? vals.join(", ") : "(nenhuma opção marcada)"}`);
+
+    } else if (q.type === "input") {
+      // input de texto simples
+      const el  = $("#"+qn);
+      const val = (el?.value || "").trim();
+      answers[qn] = val;
+      if (val) answeredCount++;
+      qaPairs.push(`${n}. ${label}: ${val ? val.replace(/\s+/g," ").trim() : "(sem resposta)"}`);
+    }
+  });
+
+  const categoria = qaPairs.join(" | ");
+
+  localStorage.setItem(
+    AUTOSAVE_KEY,
+    JSON.stringify({ code: CODE, token: qs("token"), answers })
+  );
+}
+
+
+function restoreAutosave(){
+  try{
+    const raw = localStorage.getItem(AUTOSAVE_KEY); 
+    if(!raw) return;
+
+    const {answers} = JSON.parse(raw) || {}; 
+    if(!answers) return;
+
+    Object.entries(answers).forEach(([key,val])=>{
+      if (Array.isArray(val)) {
+        // vale tanto pra radio quanto pra checkbox
+        val.forEach(v=>{
+          const el = document.querySelector(`input[name="${key}"][value="${v}"]`);
+          if (el) el.checked = true;
+        });
+      } else {
+        // textarea OU input
+        const el = document.getElementById(key);
+        if (el) {
+          el.value = val;
+          if (el.tagName === "TEXTAREA") {
+            el.style.height = "auto";
+            el.style.height = (el.scrollHeight+2)+"px";
+          }
+        }
+      }
+    });
+
+    updateProg();
+  }catch(_){}
+}
+
+function clearAutosave(){ localStorage.removeItem(AUTOSAVE_KEY); }
+
+// ======== ESTADO ========
+let patient=null, tokenRow=null, CPF="";
+let startAt = Date.now();
+
+// ======== BOOT POR TOKEN ========
 (async function boot(){
   try{
     const TOKEN=qs("token");
-    if(!TOKEN){setBox("#alert","Link inválido (sem token).","err");return;}
-    const trows=await sheetSearch(SHEETS.TOKENS,{token:TOKEN});
-    if(!trows?.length)throw new Error("Token inválido ou expirado.");
-    const tokenRow=trows[0];
+    if(!TOKEN){ setBox("#alert","Link inválido (sem token). Solicite um novo link.","err"); return; }
+
+    const trows=await sheetSearch(SHEETS.TOKENS,{ token:TOKEN });
+    if(!trows?.length) throw new Error("Token inválido ou expirado.");
+    tokenRow=trows[0];
     const disabled=String(tokenRow.disabled||"não").toLowerCase()==="sim";
-    const expired=tokenRow.expires_at&&(Date.parse(tokenRow.expires_at)<Date.now());
-    if(disabled||expired)throw new Error("Token desativado/expirado.");
+    const expired = tokenRow.expires_at && (Date.parse(tokenRow.expires_at) < Date.now());
+    if(disabled || expired) throw new Error("Token desativado/expirado. Peça um novo link.");
 
-    CPF=onlyDigits(tokenRow.cpf||"");
-    if(!CPF)throw new Error("Token sem CPF vinculado.");
-    const prows=await sheetSearch(SHEETS.PATIENTS,{cpf:CPF});
-    if(!prows?.length)throw new Error("Paciente não encontrado.");
+    CPF=onlyDigits(tokenRow.cpf||""); if(!CPF) throw new Error("Token sem CPF vinculado.");
+
+    const prows=await sheetSearch(SHEETS.PATIENTS,{ cpf:CPF });
+    if(!prows?.length) throw new Error("Paciente não encontrado.");
     patient=prows[0];
-    const allowed=String(patient[CODE]||"").toLowerCase()==="sim";
-    if(!allowed){setBox("#alert","Formulário não liberado para este participante.","err");return;}
 
-    const already=await sheetSearch(SHEETS.SCORES,{cpf:CPF,code:CODE});
+    const allowed=String(patient[CODE]||"").toLowerCase()==="sim";
+    if(!allowed){ setBox("#alert","Este formulário não está liberado para você. Entre em contato com o consultório.","err"); return; }
+
     const flagDone=String(patient[`${CODE}_FEITO`]||"").toLowerCase()==="sim";
-    if(already?.length||flagDone){
-      setBox("#alert","Formulário já respondido. Voltando ao portal…","ok");
-      setTimeout(goPortalWithToken,1200);
-      return;
+    const already=await sheetSearch(SHEETS.SCORES,{ cpf:CPF, code:CODE });
+    if(flagDone || (already && already.length)){
+      setBox("#alert","Você já respondeu este formulário. Voltando ao portal…","ok");
+      setTimeout(goPortalWithToken,1200); return;
     }
+
     renderPatientInfo();
-    $("#form").style.display="block";
+    renderQuestions();
     $("#pacInfo").style.display="grid";
+    $("#form").style.display="block";
     hideBox("#alert");
     startAt=Date.now();
+    restoreAutosave();
+
   }catch(err){
     console.error(err);
-    setBox("#alert",err.message||"Falha ao abrir o formulário.","err");
+    setBox("#alert", err.message || "Falha ao abrir o formulário. Tente novamente mais tarde.", "err");
   }
 })();
 
 function renderPatientInfo(){
-  const g=$("#pacInfo");
-  g.innerHTML="";
-  const info=[["Nome",patient.nome||"-"],["Nascimento",fmtDateISO(patient.data_nascimento)]];
-  for(const [k,v]of info){
-    const d=document.createElement("div");
-    d.className="info";
+  const g=$("#pacInfo"); g.innerHTML="";
+  const info=[["Nome",patient.nome||"-"],["CPF",maskCPF(patient.cpf)],["Nascimento",fmtDateISO(patient.data_nascimento)],["E-mail",patient.email||"-"],["WhatsApp",patient.whatsapp||"-"]];
+  for(const [k,v] of info){
+    const d=document.createElement("div"); d.className="info";
     d.innerHTML=`<b>${k}</b><div>${v||"-"}</div>`;
     g.appendChild(d);
   }
 }
 
-
-// =============================
-// PARTE 2 — PERGUNTAS E CÁLCULOS
-// =============================
-
-// ---------- LISTA DE PERGUNTAS ----------
-const QUESTIONS = [
-  // Dimensão 1: Habilidades Intelectuais Avançadas
-  "Aprende rapidamente conceitos complexos, mesmo quando os colegas ainda estão entendendo o básico.",
-  "Recorda detalhes de histórias ou explicações após semanas ou meses.",
-  "Resolve quebra-cabeças ou desafios de lógica com facilidade.",
-  "Durante conversas, identifica falhas lógicas e propõe correções.",
-  "Passa tempo pesquisando assuntos acadêmicos fora do conteúdo escolar.",
-  "Prefere livros ou temas mais avançados (ex: filosofia, história antiga).",
-  "Usa conhecimentos de uma área para compreender outra (ex: usa física para entender biologia).",
-  "Analisa diferentes pontos de vista antes de formar uma opinião.",
-  "Consegue explicar ideias abstratas com exemplos próprios.",
-  "Aplica conhecimentos aprendidos em novos contextos.",
-
-  // Dimensão 2: Criatividade e Originalidade
-  "Apresenta ideias originais e soluções criativas para problemas.",
-  "Cria histórias ou desenhos com enredos e personagens elaborados.",
-  "Propõe novas maneiras de organizar ou realizar atividades.",
-  "Sugeriu métodos alternativos para resolver exercícios.",
-  "Apresenta múltiplas perspectivas antes de decidir algo.",
-  "Mostra curiosidade e gosta de explorar assuntos novos.",
-  "Combina ideias diferentes para criar algo novo.",
-  "Propõe múltiplas soluções para problemas complexos.",
-  "Gosta de experimentar novas formas de fazer as coisas.",
-  "Explica conceitos abstratos com exemplos criativos.",
-
-  // Dimensão 3: Motivação e Persistência
-  "Demonstra vontade de realizar tarefas, mesmo sem ser solicitado.",
-  "Continua uma tarefa até terminá-la, mesmo com dificuldades.",
-  "Mantém o foco por longos períodos em atividades desafiadoras.",
-  "Cumpre prazos e metas sem precisar de cobrança.",
-  "Busca sempre fazer o melhor possível no que realiza.",
-  "Toma iniciativa e decide o que fazer por conta própria.",
-  "Gosta de atividades que exigem esforço e superação.",
-  "Não desiste facilmente diante de obstáculos.",
-  "Demonstra interesse contínuo em aprender mais sobre um tema.",
-  "Controla emoções e comportamento para atingir seus objetivos.",
-
-  // Dimensão 4: Capacidade de Liderança
-  "Divide tarefas e coordena atividades em grupo com segurança.",
-  "Fala com clareza e convicção, expressando suas ideias com confiança.",
-  "Organiza grupos ou eventos para garantir que tudo funcione bem.",
-  "Motiva colegas e oferece apoio quando estão desanimados.",
-  "Tenta resolver conflitos entre colegas com diálogo e empatia.",
-  "Distribui tarefas conforme as habilidades de cada participante.",
-  "Toma decisões rápidas e explica suas escolhas com segurança.",
-  "Percebe quando alguém está excluído e busca incluir essa pessoa.",
-  "Mantém a calma e ajuda o grupo mesmo sob pressão.",
-  "Ensina colegas com paciência, mesmo que isso leve mais tempo.",
-
-  // Dimensão 5: Sensibilidade Emocional
-  "Percebe quando alguém está triste e demonstra preocupação.",
-  "Mostra empatia e oferece conforto quando alguém passa por um momento difícil.",
-  "Adota uma postura calma em ambientes tensos.",
-  "Sugere pausas ou momentos de relaxamento quando há estresse.",
-  "Demonstra cuidado e interesse pelo bem-estar dos outros.",
-  "Consegue expressar suas emoções de forma clara e respeitosa.",
-  "Reage contra injustiças, mesmo que isso cause desconforto.",
-  "Percebe emoções alheias observando gestos e expressões corporais.",
-  "Tenta resolver conflitos com base no diálogo e nas emoções envolvidas.",
-  "Mostra tolerância e respeito por pessoas com opiniões diferentes.",
-
-  // Dimensão 6: Interesses Avançados
-  "Prefere estudar temas complexos como história, ciência ou psicologia.",
-  "Busca conhecimento por conta própria, lendo ou fazendo cursos online.",
-  "Participa de atividades avançadas, como feiras de ciências ou projetos de pesquisa.",
-  "Mantém interesse prolongado por um mesmo tema ao longo dos anos.",
-  "Compartilha conhecimento com colegas e professores com clareza.",
-  "Cria projetos independentes para investigar temas de seu interesse.",
-  "Entende conceitos complexos e consegue explicá-los de forma simples.",
-  "Integra conhecimentos de várias áreas para compreender temas amplos.",
-  "Demonstra especial interesse por um campo específico do saber.",
-  "Gosta de discutir assuntos complexos com outras pessoas interessadas."
-];
-
-// ---------- MAPEAMENTO DE DIMENSÕES ----------
-const DIM_RANGES = {
-  "Habilidades Intelectuais Avançadas": [1,10],
-  "Criatividade e Originalidade": [11,20],
-  "Motivação e Persistência": [21,30],
-  "Capacidade de Liderança": [31,40],
-  "Sensibilidade Emocional": [41,50],
-  "Interesses Avançados": [51,60]
-};
-
-// ---------- VALORES DE RESPOSTA ----------
-const OPTS = [
-  {label:"Nunca", val:1},
-  {label:"Raramente", val:2},
-  {label:"Às vezes", val:2},
-  {label:"Frequentemente", val:3},
-  {label:"Sempre", val:4}
-];
-
-// ---------- RENDERIZAÇÃO ----------
-function renderQuestions(){
-  const host=$("#qs");
-  host.innerHTML="";
-  QUESTIONS.forEach((txt,idx)=>{
-    const n=idx+1;
-    const qn=String(n).padStart(3,"0");
-    const wrap=document.createElement("div");
-    wrap.className="q";
-    wrap.innerHTML=`<h3>${n}. ${txt}</h3>`;
-    const opts=document.createElement("div");
-    opts.className="opts";
-    OPTS.forEach((o,i)=>{
-      const id=`q${qn}_${i}`;
-      const l=document.createElement("label");
-      l.className="opt";
-      l.innerHTML=`<input type="radio" name="q${qn}" id="${id}" value="${o.val}" required><span>${o.label}</span>`;
-      opts.appendChild(l);
-    });
-    wrap.appendChild(opts);
-    host.appendChild(wrap);
-  });
-  updateProgress();
-  host.addEventListener("input",()=>{updateProgress();autosaveAnswers();});
-  host.addEventListener("change",()=>{updateProgress();autosaveAnswers();});
-}
-
-function updateProgress(){
-  const N=QUESTIONS.length;
-  const answered=[...document.querySelectorAll("input[type=radio]:checked")].length;
-  $("#progress").textContent=`${answered}/${N} respondidas`;
-}
-
-// ---------- AUTOSAVE ----------
-function autosaveAnswers(){
-  const stored={};
-  QUESTIONS.forEach((_,idx)=>{
-    const n=idx+1;
-    const qn=String(n).padStart(3,"0");
-    const sel=document.querySelector(`input[name="q${qn}"]:checked`);
-    if(sel) stored[n]=Number(sel.value);
-  });
-  localStorage.setItem(AUTOSAVE_KEY,JSON.stringify(stored));
-}
-function restoreAutosave(){
-  try{
-    const raw=localStorage.getItem(AUTOSAVE_KEY);
-    if(!raw)return;
-    const data=JSON.parse(raw);
-    Object.entries(data).forEach(([k,v])=>{
-      const qn=String(k).padStart(3,"0");
-      const el=document.querySelector(`input[name="q${qn}"][value="${v}"]`);
-      if(el)el.checked=true;
-    });
-    updateProgress();
-  }catch(_){}
-}
-function clearAutosave(){localStorage.removeItem(AUTOSAVE_KEY);}
-
-// ---------- CÁLCULOS ----------
-function calcDimensionScores(answers){
-  const res={};
-  for(const [dim,[start,end]] of Object.entries(DIM_RANGES)){
-    let sum=0,count=0;
-    for(let i=start;i<=end;i++){
-      if(answers[i]){sum+=Number(answers[i]);count++;}
-    }
-    res[dim]={total:sum,count,mean:count?sum/count:0};
-  }
-  return res;
-}
-
-function interpretDimension(sum){
-  if(sum>=40)return"Excelente nível de interesse em temas avançados, indicando alta capacidade de aprendizado e profundidade de conhecimento.";
-  if(sum>=30)return"Bom nível de interesse em temas avançados, com forte tendência a se envolver em atividades especializadas.";
-  if(sum>=20)return"Interesse em temas dentro do esperado para a faixa etária.";
-  return"Baixo nível de interesse em temas avançados, indicando necessidade de desenvolvimento e exploração adicional.";
-}
-
-function interpretGeneral(sum){
-  if(sum>=240)return"Indica características consistentes com altas habilidades e superdotação.";
-  if(sum>=180)return"Indica potencial elevado para altas habilidades, com destaque em algumas áreas específicas.";
-  if(sum>=120)return"Características dentro do esperado para a faixa etária, sem indicativos claros de altas habilidades.";
-  return"Baixa pontuação, indicando necessidade de estímulo adicional e suporte educacional.";
-}
-
-// ---------- SUBMISSÃO ----------
-$("#form").addEventListener("submit",async e=>{
+// ======== SUBMIT ========
+let sending=false;
+$("#form").addEventListener("submit", async (e)=>{
   e.preventDefault();
+  if(sending) return; 
+  sending=true; 
   hideBox("#msg");
-  const btn=$("#btnSubmit");
-  const original=btn.textContent;
-  btn.disabled=true;
+  const btn=$("#btnSubmit"); 
+  const originalText=btn.textContent; 
+  btn.disabled=true; 
   btn.textContent="Enviando…";
 
   try{
-    const answers={};
-    let firstMissing=null;
-    QUESTIONS.forEach((_,idx)=>{
-      const n=idx+1;
-      const qn=String(n).padStart(3,"0");
-      const sel=document.querySelector(`input[name="q${qn}"]:checked`);
-      if(!sel && firstMissing===null)firstMissing=n;
-      if(sel)answers[n]=Number(sel.value);
-    });
-    if(firstMissing){
-      setBox("#msg",`Responda o item ${firstMissing}.`,"warn");
-      document.getElementById(`lbl${String(firstMissing).padStart(3,"0")}`)?.scrollIntoView({behavior:"smooth",block:"center"});
-      btn.disabled=false;
-      btn.textContent=original;
+    if(!patient) throw new Error("Sessão inválida. Recarregue o link.");
+
+    const answers = {};
+    const qaPairs = [];
+    let answeredCount = 0;
+
+    for (let i=1; i<=N; i++){
+      const q   = QUESTIONS[i-1];
+      const qn  = `q${String(i).padStart(2,"0")}`;
+      const label = (typeof q === "string") ? q : (q.text || `Pergunta ${i}`);
+
+      if (typeof q === "string"){
+        const el  = document.getElementById(qn);
+        const val = (el?.value || "").trim();
+        answers[qn] = val;
+        if (val) answeredCount++;
+        qaPairs.push(`${i}. ${label}: ${val ? val.replace(/\s+/g," ").trim() : "(sem resposta)"}`);
+
+      } else if (q.type === "radio"){
+        const checked = Array.from(document.querySelectorAll(`input[name="${qn}"]:checked`)).map(el=>el.value);
+        answers[qn] = checked;
+        if (checked.length) answeredCount++;
+        qaPairs.push(`${i}. ${label}: ${checked.length ? checked.join(", ") : "(nenhuma opção marcada)"}`);
+
+      } else if (q.type === "checkbox"){
+        const checked = Array.from(document.querySelectorAll(`input[name="${qn}"]:checked`)).map(el=>el.value);
+        answers[qn] = checked;
+        if (checked.length) answeredCount++;
+        qaPairs.push(`${i}. ${label}: ${checked.length ? checked.join(", ") : "(nenhuma opção marcada)"}`);
+
+      } else if (q.type === "input"){
+        const el  = document.getElementById(qn);
+        const val = (el?.value || "").trim();
+        answers[qn] = val;
+        if (val) answeredCount++;
+        qaPairs.push(`${i}. ${label}: ${val ? val.replace(/\s+/g," ").trim() : "(sem resposta)"}`);
+
+      } else {
+        qaPairs.push(`${i}. ${label}: (tipo não suportado)`);
+      }
+    }
+
+    // 🔴 AQUI ENTRA A TRAVA DE FORMULÁRIO INCOMPLETO
+    if (answeredCount < N) {
+      sending = false;
+      btn.disabled = false;
+      btn.textContent = originalText;
+
+      document.querySelectorAll(".q.missing").forEach(el => el.classList.remove("missing"));
+
+      let firstMissingEl = null;
+
+      QUESTIONS.forEach((q, idx) => {
+        const n  = idx + 1;
+        const qn = `q${String(n).padStart(2,"0")}`;
+        let empty = false;
+
+        if (typeof q === "string" || q.type === "input") {
+          const el = document.getElementById(qn);
+          empty = !el || !el.value.trim();
+          if (empty && !firstMissingEl && el) {
+            firstMissingEl = el.closest(".q") || el;
+          }
+        } else if (q.type === "radio" || q.type === "checkbox") {
+          const hasChecked = document.querySelectorAll(`input[name="${qn}"]:checked`).length > 0;
+          empty = !hasChecked;
+          if (empty && !firstMissingEl) {
+            const anyInput = document.querySelector(`input[name="${qn}"]`);
+            if (anyInput) {
+              firstMissingEl = anyInput.closest(".q") || anyInput;
+            }
+          }
+        }
+
+        if (empty) {
+          const labelEl = document.getElementById(`lbl${String(n).padStart(2,"0")}`);
+          const box = labelEl ? labelEl.closest(".q") : null;
+          if (box) box.classList.add("missing");
+        }
+      });
+
+      if (firstMissingEl) {
+        firstMissingEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      setBox(
+        "#msg",
+        `Você deixou ${N - answeredCount} questão(ões) sem responder. Complete todas antes de enviar.`,
+        "err"
+      );
       return;
     }
 
-    const dims=calcDimensionScores(answers);
-    const totalSum=Object.values(dims).reduce((a,b)=>a+b.total,0);
-    let categoria="";
-    for(const [dim,v] of Object.entries(dims)){
-      categoria+=`${dim}: ${interpretDimension(v.total)} `;
+    // daqui pra baixo continua igual: anti-duplicidade, gravação, PATCH, etc.
+    const again = await sheetSearch(SHEETS.SCORES,{ cpf:CPF, code:CODE });
+    if (again && again.length){
+      setBox("#msg","Este formulário já foi enviado anteriormente. Voltando ao portal…","ok");
+      setTimeout(goPortalWithToken,1000);
+      return;
     }
-    categoria+=" | Interpretação geral: "+interpretGeneral(totalSum);
 
-    const questionsStr=QUESTIONS.map((txt,idx)=>{
-      const n=idx+1;
-      const val=answers[n]??"";
-      const label=OPTS.find(o=>o.val===val)?.label||"";
-      return `${n}. ${txt} => ${label}`;
-    }).join(" | ");
+    const categoria = qaPairs.join(" | ");
+    const durationSec = Math.round((Date.now()-startAt)/1000);
 
-    const durationSec=Math.round((Date.now()-startAt)/1000);
-    const row={
-      result_id:`${patient.cpf}_${CODE}_${Date.now()}`,
-      token:qs("token"),
-      cpf:patient.cpf,
-      code:CODE,
-      source:SOURCE,
-      submitted_at:new Date().toISOString(),
-      questions:questionsStr,
-      categoria:categoria,
-      metrics:JSON.stringify({answers,dims,totalSum,duration_sec:durationSec})
+    const row = {
+      result_id: `${patient.cpf}_${CODE}_${Date.now()}`,
+      token: qs("token"),
+      cpf: patient.cpf,
+      code: CODE,
+      source: "segunda fonte",
+      submitted_at: new Date().toISOString(),
+      total: answeredCount,
+      categoria,
+      metrics: JSON.stringify({
+        questions: QUESTIONS,
+        answers,
+        answeredCount,
+        duration_sec: durationSec
+      })
     };
 
-    await sheetCreate(SHEETS.SCORES,row);
-    await sheetPatchBy(SHEETS.PATIENTS,"cpf",patient.cpf,{[`${CODE}_FEITO`]:"sim",[`${CODE}_FEITO_AT`]:new Date().toISOString()});
+    await sheetCreate(SHEETS.SCORES, row);
+    await sheetPatchBy(SHEETS.PATIENTS, "cpf", patient.cpf, {
+      [`${CODE}_FEITO`]: "sim",
+      [`${CODE}_FEITO_AT`]: new Date().toISOString()
+    });
 
     clearAutosave();
-    setBox("#msg","Formulário enviado com sucesso! Retornando ao portal…","ok");
-    setTimeout(goPortalWithToken,1500);
-  }catch(err){
+    setBox("#msg","Anamnese enviada. Retornando ao portal…","ok");
+    setTimeout(goPortalWithToken, 1300);
+
+  } catch(err){
     console.error(err);
-    setBox("#msg",err.message||"Falha ao enviar. Tente novamente.","err");
-    btn.disabled=false;
-    btn.textContent=original;
+    setBox("#msg", err.message || "Falha ao enviar. Tente novamente.", "err");
+    sending=false; 
+    btn.disabled=false; 
+    btn.textContent=originalText;
   }
 });
-
-// ---------- INICIALIZAÇÃO ----------
-renderQuestions();
-restoreAutosave();
 
 
 </script>
